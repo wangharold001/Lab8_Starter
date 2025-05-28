@@ -33,6 +33,7 @@ async function init() {
  * of installing it and getting it running
  */
 function initializeServiceWorker() {
+
   // EXPLORE - START (All explore numbers start with B)
   /*******************/
   // ServiceWorkers have many uses, the most common of which is to manage
@@ -45,6 +46,23 @@ function initializeServiceWorker() {
   // We first must register our ServiceWorker here before any of the code in
   // sw.js is executed.
   // B1. TODO - Check if 'serviceWorker' is supported in the current browser
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(() => {
+          console.log('Service Worker registered successfully.');
+        }
+        )
+        .catch((error) => {
+          console.error('Service Worker registration failed:', error);
+        }
+        );
+
+    });
+  }
+}
+
   // B2. TODO - Listen for the 'load' event on the window object.
   // Steps B3-B6 will be *inside* the event listener's function created in B2
   // B3. TODO - Register './sw.js' as a service worker (The MDN article
@@ -54,7 +72,6 @@ function initializeServiceWorker() {
   // B5. TODO - In the event that the service worker registration fails, console
   //            log that it has failed.
   // STEPS B6 ONWARDS WILL BE IN /sw.js
-}
 
 /**
  * Reads 'recipes' from localStorage and returns an array of
